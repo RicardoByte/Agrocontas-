@@ -24,7 +24,14 @@ class Settings(BaseSettings):
     gemini_api_key: str = "GEMINI_API_KEY"
 
     # Modelo Gemini (ex: "gemini-3.8-flash", "gemini-1.5-mini")
-    gemini_model: str = "gemini-3.5-flash"
+    gemini_model: str = "gemini-3.8-flash"
+
+    # Modelos de fallback
+    gemini_fallback_models: list[str] = [
+        "gemini-3.7-flash",
+        "gemini-3.6-flash",
+        "gemini-3.5-flash"
+    ]
 
     # Banco de dados (ainda não utilizado pela API)
     database_url: str = "sqlite:///./agrocontas_dev.db"

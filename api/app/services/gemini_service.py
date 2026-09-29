@@ -114,11 +114,18 @@ class GeminiService:
         self.model = settings.gemini_model
 
         # Cadeia de modelos: principal -> reserva (vazio = desativado).
-        # Requer `gemini_fallback_model: str = ""` em app/core/config.py.
-        fallback = (getattr(settings, "gemini_fallback_model", "") or "").strip()
+        # Requer `gemini_fallback_models: list[str] = []` em app/core/config.py.
+        # Cadeia de modelos:
+        # principal -> fallback 1 -> fallback 2 -> fallback 3...
         self.models: list[str] = [self.model]
-        if fallback and fallback != self.model:
-            self.models.append(fallback)
+
+        fallback_models = getattr(settings, "gemini_fallback_models", []) or []
+
+        for fallback_model in fallback_models:
+            fallback_model = fallback_model.strip()
+
+            if fallback_model and fallback_model not in self.models:
+                self.models.append(fallback_model)
 
     async def extract_invoice_data(self, pdf_bytes: bytes) -> dict[str, Any]:
         """
