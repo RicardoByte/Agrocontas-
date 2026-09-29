@@ -44,18 +44,13 @@ Agrocontas/
 cd "Agrocontas "
 ```
 
-### 2. Execute o script de setup
-```bash
-bash setup.sh
-```
-
-### 3. Instale as dependências do frontend
+### 2. Instale as dependências do frontend
 > **Pré-requisito**: Node.js 18+. Baixe em https://nodejs.org
 ```bash
 npm install
 ```
 
-### 4. Inicie os servidores
+### 3. Inicie os servidores
 
 **Terminal 1 — Backend:**
 ```bash
@@ -69,7 +64,7 @@ python main.py
 npm run dev
 ```
 
-### 5. Acesse
+### 4. Acesse
 - **Frontend:** http://localhost:5173
 - **API Docs:** http://localhost:8000/docs
 - **Health Check:** http://localhost:8000/health
