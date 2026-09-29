@@ -67,6 +67,12 @@ export const useInvoiceStore = defineStore('invoice', () => {
     }
   }
 
+  /** Fecha apenas o banner de erro, mantendo o arquivo selecionado */
+  function clearError(): void {
+    errorMessage.value = null
+    status.value = 'idle'
+  }
+
   function reset(): void {
     selectedFile.value = null
     extractedData.value = null
@@ -96,6 +102,7 @@ export const useInvoiceStore = defineStore('invoice', () => {
     // Actions
     selectFile,
     extract,
+    clearError,
     reset,
   }
 })

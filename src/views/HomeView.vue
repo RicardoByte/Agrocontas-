@@ -38,7 +38,7 @@ const store = useInvoiceStore()
           <strong>Erro na extração</strong>
           <p>{{ store.errorMessage }}</p>
         </div>
-        <button class="error-close" @click="store.reset()">✕</button>
+        <button class="error-close" @click="store.clearError()">✕</button>
       </div>
 
       <!-- Viewer de dados extraídos -->

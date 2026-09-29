@@ -38,7 +38,7 @@ __screenshots__/
 # Vite
 *.timestamp-*-*.mjs
 
-# ── Variáveis de Ambiente (NUNCA commitar!) ──────────────
+# ── Variáveis de Ambiente (NUNCA commitar as originais!) ──────────────
 .env
 .env.local
 .env.*.local
@@ -52,7 +52,6 @@ __pycache__/
 .Python
 api/venv/
 api/.venv/
-api/.env
 api/*.egg-info/
 api/dist/
 api/build/
