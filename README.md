@@ -2,18 +2,6 @@
 
 Sistema de gestão financeira para agronegócio com extração inteligente de Notas Fiscais via IA.
 
-## Stack Tecnológica
-
-| Camada | Tecnologia |
-|--------|-----------|
-| **Frontend** | Vue 3 + TypeScript + Vite |
-| **Estado** | Pinia |
-| **Roteamento** | Vue Router 4 |
-| **Backend** | Python + FastAPI |
-| **IA** | Google Gemini 2.0 Flash |
-| **Banco de Dados** | PostgreSQL + SQLAlchemy |
-| **HTTP Client** | Axios |
-
 ## Estrutura do Projeto
 
 ```
@@ -61,21 +49,13 @@ cd "Agrocontas "
 bash setup.sh
 ```
 
-### 3. Configure a Gemini API Key
-1. Acesse: https://aistudio.google.com/app/apikey
-2. Crie uma chave gratuita
-3. Edite `api/.env` e coloque sua chave:
-```env
-GEMINI_API_KEY=sua_chave_aqui
-```
-
-### 4. Instale as dependências do frontend
+### 3. Instale as dependências do frontend
 > **Pré-requisito**: Node.js 18+. Baixe em https://nodejs.org
 ```bash
 npm install
 ```
 
-### 5. Inicie os servidores
+### 4. Inicie os servidores
 
 **Terminal 1 — Backend:**
 ```bash
@@ -89,7 +69,7 @@ python main.py
 npm run dev
 ```
 
-### 6. Acesse
+### 5. Acesse
 - **Frontend:** http://localhost:5173
 - **API Docs:** http://localhost:8000/docs
 - **Health Check:** http://localhost:8000/health
@@ -105,10 +85,4 @@ npm run dev
 - [x] Indicador de processamento do Gemini
 - [x] Tratamento de erros com mensagens amigáveis
 
-## Segurança
 
-- ✅ Gemini API Key em variável de ambiente (nunca no código)
-- ✅ Validação de tipo de arquivo (apenas PDF)
-- ✅ Limite de tamanho de upload (10MB)
-- ✅ CORS configurado por lista de origens permitidas
-- ✅ `.env` no `.gitignore`
