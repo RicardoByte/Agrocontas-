@@ -1,7 +1,18 @@
 <script setup lang="ts">
-// App root — limpo, sem lógica (toda lógica está nas views/stores)
+import AppNavbar from '@/components/AppNavbar.vue'
 </script>
 
 <template>
-  <RouterView />
+  <div class="app-layout">
+    <AppNavbar />
+    <RouterView />
+  </div>
 </template>
+
+<style scoped>
+.app-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+</style>

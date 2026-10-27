@@ -2,6 +2,7 @@
 import { useInvoiceStore } from '@/stores/invoiceStore'
 import InvoiceUploader from '@/components/InvoiceUploader.vue'
 import JsonViewer from '@/components/JsonViewer.vue'
+import InvoiceAnalysis from '@/components/InvoiceAnalysis.vue'
 
 const store = useInvoiceStore()
 </script>
@@ -16,12 +17,17 @@ const store = useInvoiceStore()
       </div>
       <h1 class="hero__title">Extração de Dados de<br /><span class="hero__title-accent">Nota Fiscal</span></h1>
       <p class="hero__subtitle">
-        Carregue um PDF de nota fiscal e extraia os dados automaticamente usando IA
+        Carregue um PDF de nota fiscal, extraia os dados com IA e lance automaticamente no banco de dados
       </p>
     </header>
 
-    <!-- ── Card Principal ────────────────────────────────── -->
+    <!-- ── Card Principal (1ª Etapa: Extração) ──────────── -->
     <div class="card">
+      <div class="card-section-label">
+        <span class="section-step">1ª ETAPA</span>
+        <span class="section-step-title">Extração de Dados via IA Gemini</span>
+      </div>
+
       <!-- Uploader -->
       <InvoiceUploader />
 
@@ -45,11 +51,16 @@ const store = useInvoiceStore()
       <JsonViewer />
     </div>
 
+    <!-- ── Card Análise (2ª Etapa: Consulta e Lançamento) ── -->
+    <div v-if="store.hasData" class="card analysis-card">
+      <InvoiceAnalysis />
+    </div>
+
     <!-- ── Footer ─────────────────────────────────────────── -->
     <footer class="page-footer">
       <span>AgroContas</span>
       <span class="footer-sep">·</span>
-      <span>Sprint 1 — Extração de NF-e</span>
+      <span>Sprint 2 — Banco de Dados &amp; Lançamento Automático</span>
     </footer>
   </main>
 </template>
@@ -71,7 +82,7 @@ const store = useInvoiceStore()
   flex-direction: column;
   align-items: center;
   gap: 0.75rem;
-  max-width: 560px;
+  max-width: 580px;
 }
 
 .hero__badge {
@@ -128,7 +139,7 @@ const store = useInvoiceStore()
 /* ── Card ─────────────────────────────────────────────── */
 .card {
   width: 100%;
-  max-width: 680px;
+  max-width: 720px;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-xl);
@@ -139,6 +150,35 @@ const store = useInvoiceStore()
   box-shadow:
     0 0 0 1px rgba(255, 255, 255, 0.04),
     0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.analysis-card {
+  max-width: 860px;
+}
+
+/* ── Section Label ────────────────────────────────────── */
+.card-section-label {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.section-step {
+  background: var(--color-accent-gradient);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.07em;
+}
+
+.section-step-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
 }
 
 /* ── Divider ─────────────────────────────────────────── */

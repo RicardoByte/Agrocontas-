@@ -12,9 +12,30 @@ const router = createRouter({
         title: 'Extração de NF-e | AgroContas',
       },
     },
-    // Futuros módulos do AgroContas:
-    // { path: '/invoices', name: 'invoices', component: () => import('@/views/InvoiceListView.vue') },
-    // { path: '/dashboard', name: 'dashboard', component: () => import('@/views/DashboardView.vue') },
+    {
+      path: '/pessoas',
+      name: 'pessoas',
+      component: () => import('@/views/PessoasView.vue'),
+      meta: {
+        title: 'Manter Pessoas | AgroContas',
+      },
+    },
+    {
+      path: '/classificacoes',
+      name: 'classificacoes',
+      component: () => import('@/views/ClassificacoesView.vue'),
+      meta: {
+        title: 'Manter Classificações | AgroContas',
+      },
+    },
+    {
+      path: '/movimentos',
+      name: 'movimentos',
+      component: () => import('@/views/MovimentosView.vue'),
+      meta: {
+        title: 'Movimento de Contas | AgroContas',
+      },
+    },
   ],
 })
 
