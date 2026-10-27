@@ -236,17 +236,32 @@ async def launch_movement(
             await db.flush()
 
     # 4. CRIAR REGISTRO DO MOVIMENTO E SUA PARCELA
+    if not faturado_obj:
+        # Neon exige faturado_id NOT NULL
+        stmt = select(Pessoa).where(Pessoa.tipo == "FATURADO", Pessoa.ativo == True)
+        res = await db.execute(stmt)
+        faturado_obj = res.scalars().first()
+        if not faturado_obj:
+            faturado_obj = Pessoa(
+                tipo="FATURADO",
+                razao_social=req.faturado_nome or "FATURADO PADRÃO",
+                ativo=True,
+            )
+            db.add(faturado_obj)
+            await db.flush()
+
     movimento = MovimentoContas(
         tipo=req.tipo_movimento,  # "APAGAR"
         fornecedor_id=fornecedor_obj.id if fornecedor_obj else None,
-        faturado_id=faturado_obj.id if faturado_obj else None,
+        faturado_id=faturado_obj.id,
         numero_documento=req.numero_documento,
         serie=req.serie,
         chave_acesso=req.chave_acesso,
         data_emissao=req.data_emissao or date.today(),
         valor_total=req.valor_total,
         observacao=req.observacao,
-        status="PENDENTE",
+        origem="AUTOMATICO",
+        status="ABERTO",
         ativo=True,
     )
     db.add(movimento)
@@ -271,7 +286,8 @@ async def launch_movement(
                 numero_parcela=p.numero_parcela,
                 data_vencimento=p.data_vencimento,
                 valor=p.valor,
-                status=p.status,
+                valor_pago=Decimal("0.00"),
+                status="PENDENTE",
                 ativo=True,
             )
             db.add(db_p)
@@ -284,6 +300,7 @@ async def launch_movement(
             numero_parcela=1,
             data_vencimento=req.data_emissao or date.today(),
             valor=req.valor_total,
+            valor_pago=Decimal("0.00"),
             status="PENDENTE",
             ativo=True,
         )

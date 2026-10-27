@@ -8,245 +8,218 @@ const store = useInvoiceStore()
 </script>
 
 <template>
-  <main class="page">
-    <!-- ── Hero / Header ─────────────────────────────────── -->
-    <header class="hero">
-      <div class="hero__badge">
-        <span class="badge-dot" />
-        Powered by Gemini AI
+  <div class="page-content">
+    <!-- ── Page Header ──────────────────────────────────────── -->
+    <div class="page-inner-header">
+      <div class="page-breadcrumb">
+        <a href="#">Cadastros</a>
+        <span class="breadcrumb-sep">/</span>
+        <span>Processamento de Documentos Fiscais</span>
+        <span class="breadcrumb-sep">/</span>
       </div>
-      <h1 class="hero__title">Extração de Dados de<br /><span class="hero__title-accent">Nota Fiscal</span></h1>
-      <p class="hero__subtitle">
-        Carregue um PDF de nota fiscal, extraia os dados com IA e lance automaticamente no banco de dados
-      </p>
-    </header>
+      <div class="page-title-row">
+        <div>
+          <h1 class="page-title">Extração de Notas &amp; Documentos</h1>
+          <p class="page-subtitle">
+            Importe arquivos fiscais (PDF, XML da SEFAZ, DANFE ou fotos de canhotos) para leitura
+            inteligente via OCR e confronto cadastral automático com o banco de dados.
+          </p>
+        </div>
+        <div class="header-badge">
+          <span class="ai-badge">
+            <span class="ai-badge-dot" />
+            Powered by Gemini AI
+          </span>
+        </div>
+      </div>
+    </div>
 
-    <!-- ── Card Principal (1ª Etapa: Extração) ──────────── -->
-    <div class="card">
-      <div class="card-section-label">
-        <span class="section-step">1ª ETAPA</span>
-        <span class="section-step-title">Extração de Dados via IA Gemini</span>
+    <!-- ── Page Body ────────────────────────────────────────── -->
+    <div class="page-body">
+
+      <!-- Step 1 — Extração -->
+      <div class="precision-card extraction-card">
+        <div class="extraction-card__inner">
+          <InvoiceUploader />
+        </div>
+
+        <!-- Padrões suportados (rodapé do card) -->
+        <div class="supported-formats">
+          <span class="formats-label">PADRÕES:</span>
+          <span class="format-tag format-tag--green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="10" height="10">
+              <path stroke-linecap="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+            </svg>
+            NF-e Mod. 55
+          </span>
+          <span class="format-tag format-tag--green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="10" height="10">
+              <path stroke-linecap="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+            </svg>
+            NFC-e Mod. 65
+          </span>
+          <span class="format-tag format-tag--green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="10" height="10">
+              <path stroke-linecap="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+            </svg>
+            NFS-e de Serviços
+          </span>
+          <span class="format-tag format-tag--code">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="10" height="10">
+              <path stroke-linecap="round" stroke-width="2" d="M16 18l6-6-6-6M8 6l-6 6 6 6"/>
+            </svg>
+            XML Completo SEFAZ
+          </span>
+          <span class="format-tag format-tag--orange">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="10" height="10">
+              <path stroke-linecap="round" stroke-width="2" d="M12 8v4l3 3M12 2a10 10 0 100 20A10 10 0 0012 2z"/>
+            </svg>
+            Contrato Futuro
+          </span>
+        </div>
       </div>
 
-      <!-- Uploader -->
-      <InvoiceUploader />
-
-      <!-- Divisor (só aparece quando há dados) -->
-      <div v-if="store.hasData" class="divider" />
-
-      <!-- Mensagem de erro -->
-      <div v-if="store.isError" class="error-banner">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" class="error-icon">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+      <!-- Error banner -->
+      <div v-if="store.isError" class="alert alert-error">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="16" height="16" style="flex-shrink:0;margin-top:1px">
+          <path stroke-linecap="round" stroke-width="2"
+            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
         </svg>
         <div>
-          <strong>Erro na extração</strong>
-          <p>{{ store.errorMessage }}</p>
+          <strong>Erro na extração:</strong> {{ store.errorMessage }}
         </div>
-        <button class="error-close" @click="store.clearError()">✕</button>
+        <button
+          style="margin-left:auto;background:none;border:none;cursor:pointer;font-size:0.85rem;color:inherit;opacity:0.6"
+          @click="store.clearError()"
+        >✕</button>
       </div>
 
-      <!-- Viewer de dados extraídos -->
-      <JsonViewer />
-    </div>
+      <!-- JSON Viewer -->
+      <div v-if="store.hasData" class="precision-card">
+        <div class="card-header">
+          <span class="card-title">Dados Extraídos — JSON</span>
+          <span class="badge badge-success">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="9" height="9">
+              <path stroke-linecap="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+            </svg>
+            Extração concluída
+          </span>
+        </div>
+        <div class="card-body" style="padding:0">
+          <JsonViewer />
+        </div>
+      </div>
 
-    <!-- ── Card Análise (2ª Etapa: Consulta e Lançamento) ── -->
-    <div v-if="store.hasData" class="card analysis-card">
-      <InvoiceAnalysis />
-    </div>
+      <!-- Step 2 — Análise -->
+      <div v-if="store.hasData" class="precision-card">
+        <div class="card-header">
+          <span class="card-title">
+            <span class="step-tag">2ª Etapa</span>
+            Consulta e Lançamento Automático
+          </span>
+        </div>
+        <div class="card-body" style="padding:0">
+          <InvoiceAnalysis />
+        </div>
+      </div>
 
-    <!-- ── Footer ─────────────────────────────────────────── -->
-    <footer class="page-footer">
-      <span>AgroContas</span>
-      <span class="footer-sep">·</span>
-      <span>Sprint 2 — Banco de Dados &amp; Lançamento Automático</span>
-    </footer>
-  </main>
+    </div>
+  </div>
 </template>
 
 <style scoped>
-.page {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 3rem 1.25rem 2rem;
-  gap: 1.75rem;
+/* ── Extraction card overrides ─────────────────────────── */
+.extraction-card {
+  overflow: hidden;
 }
 
-/* ── Hero ─────────────────────────────────────────────── */
-.hero {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.75rem;
-  max-width: 580px;
+.extraction-card__inner {
+  padding: 0;
 }
 
-.hero__badge {
+/* ── AI Badge ──────────────────────────────────────────── */
+.ai-badge {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  background: rgba(99, 102, 241, 0.12);
-  border: 1px solid rgba(99, 102, 241, 0.25);
-  color: #a5b4fc;
-  font-size: 0.75rem;
-  font-weight: 500;
-  padding: 0.3rem 0.875rem;
-  border-radius: 100px;
-  letter-spacing: 0.025em;
+  gap: 0.4rem;
+  background: var(--color-accent-subtle);
+  border: 1px solid rgba(29, 111, 55, 0.2);
+  color: var(--color-accent);
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.3rem 0.7rem;
+  border-radius: 99px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  margin-top: 0.25rem;
 }
 
-.badge-dot {
+.ai-badge-dot {
   width: 6px;
   height: 6px;
-  background: #6366f1;
+  background: var(--color-accent-mid);
   border-radius: 50%;
-  box-shadow: 0 0 6px rgba(99, 102, 241, 0.8);
-  animation: glow 2s ease-in-out infinite;
+  box-shadow: 0 0 5px rgba(45, 158, 80, 0.6);
 }
 
-@keyframes glow {
-  0%, 100% { box-shadow: 0 0 6px rgba(99, 102, 241, 0.8); }
-  50% { box-shadow: 0 0 12px rgba(99, 102, 241, 1); }
-}
-
-.hero__title {
-  font-size: clamp(1.75rem, 5vw, 2.5rem);
-  font-weight: 800;
-  line-height: 1.2;
-  color: var(--color-text-primary);
-  margin: 0;
-  letter-spacing: -0.02em;
-}
-
-.hero__title-accent {
-  background: var(--color-accent-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.hero__subtitle {
-  font-size: 0.95rem;
-  color: var(--color-text-muted);
-  margin: 0;
-  line-height: 1.6;
-}
-
-/* ── Card ─────────────────────────────────────────────── */
-.card {
-  width: 100%;
-  max-width: 720px;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
-  padding: 1.75rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.04),
-    0 20px 60px rgba(0, 0, 0, 0.4);
-}
-
-.analysis-card {
-  max-width: 860px;
-}
-
-/* ── Section Label ────────────────────────────────────── */
-.card-section-label {
+/* ── Supported formats bar ─────────────────────────────── */
+.supported-formats {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid var(--color-border);
-}
-
-.section-step {
-  background: var(--color-accent-gradient);
-  color: #fff;
-  font-size: 0.7rem;
-  font-weight: 800;
-  padding: 0.2rem 0.55rem;
-  border-radius: var(--radius-sm);
-  letter-spacing: 0.07em;
-}
-
-.section-step-title {
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--color-text-muted);
-}
-
-/* ── Divider ─────────────────────────────────────────── */
-.divider {
-  height: 1px;
-  background: var(--color-border);
-}
-
-/* ── Error Banner ────────────────────────────────────── */
-.error-banner {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.75rem;
-  background: var(--color-error-subtle);
-  border: 1px solid rgba(239, 68, 68, 0.3);
-  border-radius: var(--radius-md);
-  padding: 1rem;
-  animation: slide-up 0.3s ease;
-}
-
-@keyframes slide-up {
-  from { opacity: 0; transform: translateY(-8px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.error-icon {
-  width: 1.25rem;
-  height: 1.25rem;
-  color: var(--color-error);
-  flex-shrink: 0;
-  margin-top: 1px;
-}
-
-.error-banner strong {
-  display: block;
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--color-error);
-  margin-bottom: 0.25rem;
-}
-
-.error-banner p {
-  font-size: 0.8rem;
-  color: var(--color-text-muted);
-  margin: 0;
-}
-
-.error-close {
-  margin-left: auto;
-  background: none;
-  border: none;
-  color: var(--color-text-muted);
-  cursor: pointer;
-  font-size: 0.875rem;
-  padding: 0 0.25rem;
-  flex-shrink: 0;
-}
-
-.error-close:hover { color: var(--color-error); }
-
-/* ── Footer ──────────────────────────────────────────── */
-.page-footer {
-  display: flex;
   gap: 0.5rem;
-  align-items: center;
-  font-size: 0.75rem;
-  color: var(--color-text-muted);
+  padding: 0.75rem 1.25rem;
+  border-top: 1px solid var(--color-border);
+  background: var(--color-surface-2);
+  flex-wrap: wrap;
 }
 
-.footer-sep { opacity: 0.4; }
+.formats-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-faint);
+}
+
+.format-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.2rem 0.55rem;
+  border-radius: 99px;
+}
+
+.format-tag--green {
+  background: var(--color-success-bg);
+  color: var(--color-success);
+  border: 1px solid var(--color-success-border);
+}
+
+.format-tag--code {
+  background: rgba(3, 105, 161, 0.08);
+  color: var(--color-info);
+  border: 1px solid rgba(3, 105, 161, 0.2);
+}
+
+.format-tag--orange {
+  background: var(--color-warning-bg);
+  color: var(--color-warning);
+  border: 1px solid rgba(217, 119, 6, 0.2);
+}
+
+/* ── Step tag ──────────────────────────────────────────── */
+.step-tag {
+  background: var(--color-accent);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 0.15rem 0.45rem;
+  border-radius: var(--radius-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-right: 0.3rem;
+}
 </style>

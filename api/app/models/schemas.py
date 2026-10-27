@@ -225,3 +225,38 @@ class LaunchMovementResponse(BaseModel):
     despesa: EntitySearchResult
     total_parcelas: int
     valor_total: Decimal
+
+
+# ============================================================================
+# Schemas: AUTENTICAÇÃO E USUÁRIOS
+# ============================================================================
+
+class UserRegisterRequest(BaseModel):
+    login: str = Field(min_length=3, max_length=100, description="Login / Usuário")
+    senha: str = Field(min_length=4, description="Senha do usuário")
+    nome: str = Field(min_length=2, max_length=255, description="Nome Completo ou Razão Social")
+    cpf_cnpj: Optional[str] = None
+    perfil_id: int = Field(default=2, description="1: ADMIN, 2: COMUM")
+
+
+class UserLoginRequest(BaseModel):
+    login: str = Field(description="Login ou e-mail")
+    senha: str = Field(description="Senha do usuário")
+
+
+class UsuarioDTO(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    login: str
+    nome: str
+    perfil: str
+    pessoa_id: int
+    ativo: bool
+    created_at: datetime
+
+
+class AuthResponse(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
+    usuario: UsuarioDTO

@@ -16,7 +16,7 @@ from sqlalchemy import select
 from app.core.config import settings
 from app.core.database import init_db, AsyncSessionLocal
 from app.models.db_models import Pessoa, Classificacao
-from app.routers import invoice, analysis, pessoas, classificacoes, movimentos
+from app.routers import invoice, analysis, pessoas, classificacoes, movimentos, auth
 
 
 async def seed_initial_data():
@@ -110,6 +110,7 @@ app.include_router(analysis.router, prefix="/api/v1", tags=["2ª Etapa — Anál
 app.include_router(pessoas.router, prefix="/api/v1", tags=["Manter Pessoas"])
 app.include_router(classificacoes.router, prefix="/api/v1", tags=["Manter Classificação"])
 app.include_router(movimentos.router, prefix="/api/v1", tags=["Movimento de Contas e Parcelas"])
+app.include_router(auth.router, prefix="/api/v1", tags=["Autenticação & Usuários"])
 
 
 # ---------------------------------------------------------------------------

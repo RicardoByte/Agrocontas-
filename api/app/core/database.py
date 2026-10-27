@@ -14,12 +14,28 @@ from app.core.config import settings
 
 logger = logging.getLogger(__name__)
 
+import re
+
 # Ajusta a URL de conexão para usar drivers assíncronos caso necessário
 def get_async_db_url(url: str) -> str:
-    if url.startswith("sqlite://"):
-        return url.replace("sqlite://", "sqlite+aiosqlite://")
-    if url.startswith("postgresql://"):
-        return url.replace("postgresql://", "postgresql+asyncpg://")
+    if url.startswith("postgres://"):
+        url = url.replace("postgres://", "postgresql+asyncpg://", 1)
+    elif url.startswith("postgresql://"):
+        url = url.replace("postgresql://", "postgresql+asyncpg://", 1)
+    elif url.startswith("sqlite://"):
+        url = url.replace("sqlite://", "sqlite+aiosqlite://", 1)
+
+    # asyncpg espera 'ssl=require' em vez de 'sslmode=require'
+    if "sslmode=" in url:
+        url = re.sub(r"sslmode=([a-zA-Z0-9_-]+)", r"ssl=\1", url)
+
+    # Remove parâmetros específicos do libpq que o asyncpg rejeita (como channel_binding)
+    url = re.sub(r"[&?]channel_binding=[^&]+", "", url)
+
+    # Se a remoção tirou o '?' inicial mas deixou '&', conserta o primeiro '&' para '?'
+    if "?" not in url and "&" in url:
+        url = url.replace("&", "?", 1)
+
     return url
 
 db_url = get_async_db_url(settings.database_url)
