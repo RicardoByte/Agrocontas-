@@ -40,14 +40,23 @@ def get_async_db_url(url: str) -> str:
 
 db_url = get_async_db_url(settings.database_url)
 
+is_sqlite = "sqlite" in db_url
+engine_kwargs = {
+    "echo": False,
+    "future": True,
+}
+
+if is_sqlite:
+    engine_kwargs["connect_args"] = {"check_same_thread": False}
+else:
+    # Otimizações de alta performance e resiliência para Neon PostgreSQL Serverless
+    engine_kwargs["pool_pre_ping"] = True   # Detecta e descarta conexões encerradas por inatividade
+    engine_kwargs["pool_recycle"] = 300     # Recicla conexões a cada 5 minutos
+    engine_kwargs["pool_size"] = 10         # Pool persistente eficiente
+    engine_kwargs["max_overflow"] = 20      # Suporta picos de carga
+
 # Engine assíncrono
-engine = create_async_engine(
-    db_url,
-    echo=False,
-    future=True,
-    # Parâmetros específicos para SQLite vs Postgres
-    connect_args={"check_same_thread": False} if "sqlite" in db_url else {},
-)
+engine = create_async_engine(db_url, **engine_kwargs)
 
 # Fábrica de sessões assíncronas
 AsyncSessionLocal = async_sessionmaker(

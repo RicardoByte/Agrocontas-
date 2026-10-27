@@ -114,7 +114,7 @@ class MovimentoContas(Base):
     numero_documento = Column(String(50), nullable=True, index=True)
     serie = Column(String(20), nullable=True)
     chave_acesso = Column(String(60), nullable=True, index=True)
-    data_emissao = Column(Date, nullable=True)
+    data_emissao = Column(Date, nullable=True, index=True)
     valor_total = Column(Numeric(14, 2), nullable=False, default=Decimal("0.00"))
     observacao = Column(Text, nullable=True)
     origem = Column(String(20), nullable=False, default="MANUAL")  # AUTOMATICO ou MANUAL
@@ -169,7 +169,7 @@ class ParcelaContas(Base):
     movimento_id = Column(Integer, ForeignKey("movimentos_contas.id"), nullable=False)
     identificacao = Column(String(50), nullable=False, default="ÚNICA")
     numero_parcela = Column(Integer, nullable=False, default=1)
-    data_vencimento = Column(Date, nullable=False)
+    data_vencimento = Column(Date, nullable=False, index=True)
     valor = Column(Numeric(14, 2), nullable=False, default=Decimal("0.00"))
     valor_pago = Column(Numeric(14, 2), nullable=False, default=Decimal("0.00"))
     status = Column(String(30), nullable=False, default="PENDENTE", index=True)  # PENDENTE, PARCIAL, QUITADA, CANCELADA

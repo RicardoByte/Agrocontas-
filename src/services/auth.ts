@@ -43,6 +43,21 @@ api.interceptors.request.use((config) => {
   return config
 })
 
+// ─── Interceptor de resposta para expiração de sessão (401) ───────────────
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    // Se o backend retornar 401 em rotas protegidas (não em tentativa de login errada)
+    if (error.response?.status === 401 && !error.config?.url?.includes('/auth/login')) {
+      clearSession()
+      if (window.location.pathname !== '/auth') {
+        window.location.href = '/auth'
+      }
+    }
+    return Promise.reject(error)
+  }
+)
+
 function handleApiError(error: unknown): never {
   const axiosError = error as AxiosError<{ detail: string }>
   const message =

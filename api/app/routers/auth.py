@@ -3,9 +3,10 @@ Router para Autenticação e Gestão de Usuários (Login / Cadastro).
 Integra com as tabelas 'usuarios', 'perfis' e 'pessoas' do PostgreSQL no Neon.
 """
 from datetime import datetime, timezone, timedelta
-from typing import List, Optional
+from typing import Optional
 from fastapi import APIRouter, Depends, HTTPException, Header, status
-from sqlalchemy import select
+import re
+from sqlalchemy import select, or_, func
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
@@ -174,12 +175,27 @@ async def login(
     - Controle de tentativas falhas e bloqueio temporário
     - Retorno do token JWT de sessão
     """
-    login_clean = data.login.strip().lower()
+    login_input = data.login.strip()
+    login_clean = login_input.lower()
+    doc_digits = re.sub(r"\D", "", login_input)
+
+    # Permite login por:
+    # 1. Nome de usuário (login)
+    # 2. CPF/CNPJ com pontuação (Pessoa.cpf_cnpj)
+    # 3. CPF/CNPJ apenas dígitos (removendo pontuação da base)
+    condicoes = [
+        Usuario.login == login_clean,
+        func.lower(Pessoa.cpf_cnpj) == login_clean,
+    ]
+    if len(doc_digits) in (11, 14):
+        clean_cpf_expr = func.replace(func.replace(func.replace(Pessoa.cpf_cnpj, ".", ""), "-", ""), "/", "")
+        condicoes.append(clean_cpf_expr == doc_digits)
 
     stmt = (
         select(Usuario)
         .options(selectinload(Usuario.pessoa), selectinload(Usuario.perfil))
-        .where(Usuario.login == login_clean)
+        .outerjoin(Usuario.pessoa)
+        .where(or_(*condicoes))
     )
     res = await db.execute(stmt)
     usuario = res.scalars().first()
@@ -190,14 +206,18 @@ async def login(
             detail="Usuário ou senha incorretos.",
         )
 
-    # Verifica bloqueio por tentativas
+    # Verifica bloqueio por tentativas (com timezone UTC seguro)
     agora = datetime.now(timezone.utc)
-    if usuario.bloqueado_ate and usuario.bloqueado_ate > agora:
-        minutos_restantes = max(1, int((usuario.bloqueado_ate - agora).total_seconds() / 60))
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail=f"Conta temporariamente bloqueada por excesso de tentativas. Tente novamente em {minutos_restantes} minuto(s).",
-        )
+    if usuario.bloqueado_ate:
+        bloqueado_ate = usuario.bloqueado_ate
+        if bloqueado_ate.tzinfo is None:
+            bloqueado_ate = bloqueado_ate.replace(tzinfo=timezone.utc)
+        if bloqueado_ate > agora:
+            minutos_restantes = max(1, int((bloqueado_ate - agora).total_seconds() / 60))
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail=f"Conta temporariamente bloqueada por excesso de tentativas. Tente novamente em {minutos_restantes} minuto(s).",
+            )
 
     # Validação da senha
     if not verify_password(data.senha, usuario.senha_hash):

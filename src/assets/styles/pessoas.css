@@ -1,0 +1,11 @@
+/* ============================================================
+   AgroContas — PessoasView Styles
+   Manter Fornecedores e Pessoas (Clientes, Produtores, etc.)
+   ============================================================ */
+
+/* Componentes e tabelas herdam de shared.css */
+.mono {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+}
