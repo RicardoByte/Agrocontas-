@@ -19,7 +19,7 @@ const navSections = [
     iconHeader: 'folder',
     items: [
       { path: '/', label: 'Extração de Notas', icon: 'file-text' },
-      { path: '/pessoas', label: 'Fornecedores', icon: 'truck' },
+      { path: '/pessoas', label: 'Fornecedores/Faturados', icon: 'truck' },
       { path: '/classificacoes', label: 'Operações', icon: 'layers' },
     ],
   },
@@ -27,7 +27,7 @@ const navSections = [
     label: 'Relatórios',
     iconHeader: 'chart',
     items: [
-      { path: '/pessoas', label: 'Fornecedores', icon: 'bar-chart' },
+      { path: '/pessoas', label: 'Fornecedores/Faturados', icon: 'bar-chart' },
       { path: '/movimentos', label: 'Operações', icon: 'pie-chart' },
     ],
   },

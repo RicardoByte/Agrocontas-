@@ -127,8 +127,8 @@ onMounted(() => {
       <div class="page-header">
         <div>
           <span class="page-badge">Módulo Financeiro</span>
-          <h1 class="page-title">Manter Classificações</h1>
-          <p class="page-desc">Categorias de Despesas e Receitas usadas no lançamento de contas a pagar e receber.</p>
+          <h1 class="page-title">Operações</h1>
+          <p class="page-desc">Categorias de Despesas e Receitas utilizadas no lançamento de contas a pagar e a receber.</p>
         </div>
         <button class="primary-btn" @click="openCreateModal">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="14" height="14">

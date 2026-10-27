@@ -6,22 +6,8 @@ const authStore = useAuthStore()
 
 <template>
   <header class="topbar">
-    <!-- Lado Esquerdo: Titular e Safra -->
+    <!-- Lado Esquerdo: Safra -->
     <div class="topbar-left">
-      <button class="topbar-titular-btn" type="button">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="14" height="14" stroke-width="1.8">
-          <rect x="3" y="4" width="18" height="16" rx="2"/>
-          <line x1="7" y1="8" x2="17" y2="8"/>
-          <line x1="7" y1="12" x2="17" y2="12"/>
-          <line x1="7" y1="16" x2="12" y2="16"/>
-        </svg>
-        <span class="titular-tag">TITULAR:</span>
-        <span>Beltrano (Pai)</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="10" height="10" stroke-width="2.5">
-          <polyline points="6 9 12 15 18 9"/>
-        </svg>
-      </button>
-
       <div class="topbar-safra-pill">
         <span class="safra-dot" />
         <span>SAFRA 2024/25 ATIVA</span>

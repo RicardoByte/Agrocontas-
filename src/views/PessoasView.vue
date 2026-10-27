@@ -133,8 +133,8 @@ onMounted(() => {
       <div class="page-header">
         <div>
           <span class="page-badge">Módulo de Cadastros</span>
-          <h1 class="page-title">Manter Pessoas</h1>
-          <p class="page-desc">Gerenciamento de Fornecedores, Faturados e Clientes com controle de inativação e reativação.</p>
+          <h1 class="page-title">Fornecedores/Clientes</h1>
+          <p class="page-desc">Cadastro e gerenciamento de Fornecedores, Faturados e Clientes com controle de inativação e reativação.</p>
         </div>
         <button class="primary-btn" @click="openCreateModal">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="14" height="14">
