@@ -1,0 +1,100 @@
+/* ============================================================
+   AgroContas — HomeView Styles
+   Página de Extração de Notas e Documentos
+   ============================================================ */
+
+.extraction-card {
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid var(--color-border, #e2eae2);
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.extraction-card__inner {
+  padding: 1.5rem;
+}
+
+/* AI Badge */
+.ai-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: rgba(21, 67, 38, 0.07);
+  border: 1px solid rgba(21, 67, 38, 0.18);
+  color: var(--color-agro-forest, #154326);
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.35rem 0.8rem;
+  border-radius: 99px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.ai-badge-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--color-agro-lime, #B7F618);
+  border-radius: 50%;
+  box-shadow: 0 0 6px rgba(183, 246, 24, 0.7);
+}
+
+/* Padrões Suportados */
+.supported-formats {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1.5rem;
+  border-top: 1px solid #edf2ed;
+  background: #f8faf8;
+  flex-wrap: wrap;
+}
+
+.formats-label {
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #728c76;
+}
+
+.format-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.25rem 0.65rem;
+  border-radius: 6px;
+  background: #ffffff;
+  border: 1px solid #d5e2d6;
+  color: #2f4835;
+}
+
+.format-tag--green {
+  border-color: #c4dec7;
+  color: #15803d;
+}
+
+.format-tag--code {
+  border-color: #bae6fd;
+  color: #0369a1;
+}
+
+.format-tag--orange {
+  border-color: #fed7aa;
+  color: #c2410c;
+}
+
+.step-tag {
+  background: var(--color-agro-forest, #154326);
+  color: #ffffff;
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-right: 0.4rem;
+}

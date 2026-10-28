@@ -2,211 +2,131 @@
 import { useInvoiceStore } from '@/stores/invoiceStore'
 import InvoiceUploader from '@/components/InvoiceUploader.vue'
 import JsonViewer from '@/components/JsonViewer.vue'
+import InvoiceAnalysis from '@/components/InvoiceAnalysis.vue'
 
 const store = useInvoiceStore()
 </script>
 
 <template>
-  <main class="page">
-    <!-- ── Hero / Header ─────────────────────────────────── -->
-    <header class="hero">
-      <div class="hero__badge">
-        <span class="badge-dot" />
-        Powered by Gemini AI
+  <div class="page-content">
+    <!-- ── Page Header ──────────────────────────────────────── -->
+    <div class="page-inner-header">
+      <div class="page-breadcrumb">
+        <a href="#">Cadastros</a>
+        <span class="breadcrumb-sep">/</span>
+        <span style="color: var(--color-agro-forest); font-weight: 700;">Processamento de Documentos Fiscais</span>
+        <span class="breadcrumb-sep">/</span>
       </div>
-      <h1 class="hero__title">Extração de Dados de<br /><span class="hero__title-accent">Nota Fiscal</span></h1>
-      <p class="hero__subtitle">
-        Carregue um PDF de nota fiscal e extraia os dados automaticamente usando IA
-      </p>
-    </header>
-
-    <!-- ── Card Principal ────────────────────────────────── -->
-    <div class="card">
-      <!-- Uploader -->
-      <InvoiceUploader />
-
-      <!-- Divisor (só aparece quando há dados) -->
-      <div v-if="store.hasData" class="divider" />
-
-      <!-- Mensagem de erro -->
-      <div v-if="store.isError" class="error-banner">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" class="error-icon">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-        </svg>
+      <div class="page-title-row">
         <div>
-          <strong>Erro na extração</strong>
-          <p>{{ store.errorMessage }}</p>
+          <h1 class="page-title">EXTRAÇÃO DE NOTAS &amp; DOCUMENTOS</h1>
+          <p class="page-subtitle">
+            Importe arquivos fiscais (PDF, XML da SEFAZ, DANFE ou fotos de canhotos) para leitura inteligente via OCR e confronto cadastral automático com o banco de dados.
+          </p>
         </div>
-        <button class="error-close" @click="store.clearError()">✕</button>
+        <div class="header-badge">
+          <span class="ai-badge">
+            <span class="ai-badge-dot" />
+            POWERED BY GEMINI AI
+          </span>
+        </div>
       </div>
-
-      <!-- Viewer de dados extraídos -->
-      <JsonViewer />
     </div>
 
-    <!-- ── Footer ─────────────────────────────────────────── -->
-    <footer class="page-footer">
-      <span>AgroContas</span>
-      <span class="footer-sep">·</span>
-      <span>Sprint 1 — Extração de NF-e</span>
-    </footer>
-  </main>
+    <!-- ── Page Body ────────────────────────────────────────── -->
+    <div class="page-body">
+
+      <!-- Step 1 — Extração -->
+      <div class="precision-card extraction-card">
+        <div class="extraction-card__inner">
+          <InvoiceUploader />
+        </div>
+
+        <!-- Padrões suportados (rodapé do card exatamente como Image 1) -->
+        <div class="supported-formats">
+          <span class="formats-label">PADRÕES:</span>
+          <span class="format-tag format-tag--green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="12" height="12" stroke-width="2.5">
+              <path stroke-linecap="round" d="M20 6L9 17l-5-5"/>
+            </svg>
+            NF-e Mod. 55
+          </span>
+          <span class="format-tag format-tag--green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="12" height="12" stroke-width="2.5">
+              <path stroke-linecap="round" d="M20 6L9 17l-5-5"/>
+            </svg>
+            NFC-e Mod. 65
+          </span>
+          <span class="format-tag format-tag--green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="12" height="12" stroke-width="2.5">
+              <path stroke-linecap="round" d="M20 6L9 17l-5-5"/>
+            </svg>
+            NFS-e de Serviços
+          </span>
+          <span class="format-tag format-tag--code">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="12" height="12" stroke-width="2">
+              <polyline points="16 18 22 12 16 6"/>
+              <polyline points="8 6 2 12 8 18"/>
+            </svg>
+            XML Completo SEFAZ
+          </span>
+          <span class="format-tag format-tag--orange">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="12" height="12" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+            </svg>
+            Contrato Futuro
+          </span>
+        </div>
+      </div>
+
+      <!-- Error banner -->
+      <div v-if="store.isError" class="alert alert-error">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="16" height="16" style="flex-shrink:0;margin-top:1px">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="12"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        <div>
+          <strong>Erro na extração:</strong> {{ store.errorMessage }}
+        </div>
+        <button
+          style="margin-left:auto;background:none;border:none;cursor:pointer;font-size:0.85rem;color:inherit;opacity:0.6"
+          @click="store.clearError()"
+        >✕</button>
+      </div>
+
+      <!-- JSON Viewer -->
+      <div v-if="store.hasData" class="precision-card">
+        <div class="card-header">
+          <span class="card-title">Dados Extraídos — JSON</span>
+          <span class="badge badge-success">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="9" height="9">
+              <path stroke-linecap="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+            </svg>
+            Extração concluída
+          </span>
+        </div>
+        <div class="card-body" style="padding:0">
+          <JsonViewer />
+        </div>
+      </div>
+
+      <!-- Step 2 — Análise -->
+      <div v-if="store.hasData" class="precision-card">
+        <div class="card-header">
+          <span class="card-title">
+            <span class="step-tag">2ª Etapa</span>
+            Consulta e Lançamento Automático
+          </span>
+        </div>
+        <div class="card-body" style="padding:0">
+          <InvoiceAnalysis />
+        </div>
+      </div>
+
+    </div>
+  </div>
 </template>
 
-<style scoped>
-.page {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 3rem 1.25rem 2rem;
-  gap: 1.75rem;
-}
-
-/* ── Hero ─────────────────────────────────────────────── */
-.hero {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.75rem;
-  max-width: 560px;
-}
-
-.hero__badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: rgba(99, 102, 241, 0.12);
-  border: 1px solid rgba(99, 102, 241, 0.25);
-  color: #a5b4fc;
-  font-size: 0.75rem;
-  font-weight: 500;
-  padding: 0.3rem 0.875rem;
-  border-radius: 100px;
-  letter-spacing: 0.025em;
-}
-
-.badge-dot {
-  width: 6px;
-  height: 6px;
-  background: #6366f1;
-  border-radius: 50%;
-  box-shadow: 0 0 6px rgba(99, 102, 241, 0.8);
-  animation: glow 2s ease-in-out infinite;
-}
-
-@keyframes glow {
-  0%, 100% { box-shadow: 0 0 6px rgba(99, 102, 241, 0.8); }
-  50% { box-shadow: 0 0 12px rgba(99, 102, 241, 1); }
-}
-
-.hero__title {
-  font-size: clamp(1.75rem, 5vw, 2.5rem);
-  font-weight: 800;
-  line-height: 1.2;
-  color: var(--color-text-primary);
-  margin: 0;
-  letter-spacing: -0.02em;
-}
-
-.hero__title-accent {
-  background: var(--color-accent-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.hero__subtitle {
-  font-size: 0.95rem;
-  color: var(--color-text-muted);
-  margin: 0;
-  line-height: 1.6;
-}
-
-/* ── Card ─────────────────────────────────────────────── */
-.card {
-  width: 100%;
-  max-width: 680px;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
-  padding: 1.75rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.04),
-    0 20px 60px rgba(0, 0, 0, 0.4);
-}
-
-/* ── Divider ─────────────────────────────────────────── */
-.divider {
-  height: 1px;
-  background: var(--color-border);
-}
-
-/* ── Error Banner ────────────────────────────────────── */
-.error-banner {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.75rem;
-  background: var(--color-error-subtle);
-  border: 1px solid rgba(239, 68, 68, 0.3);
-  border-radius: var(--radius-md);
-  padding: 1rem;
-  animation: slide-up 0.3s ease;
-}
-
-@keyframes slide-up {
-  from { opacity: 0; transform: translateY(-8px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.error-icon {
-  width: 1.25rem;
-  height: 1.25rem;
-  color: var(--color-error);
-  flex-shrink: 0;
-  margin-top: 1px;
-}
-
-.error-banner strong {
-  display: block;
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--color-error);
-  margin-bottom: 0.25rem;
-}
-
-.error-banner p {
-  font-size: 0.8rem;
-  color: var(--color-text-muted);
-  margin: 0;
-}
-
-.error-close {
-  margin-left: auto;
-  background: none;
-  border: none;
-  color: var(--color-text-muted);
-  cursor: pointer;
-  font-size: 0.875rem;
-  padding: 0 0.25rem;
-  flex-shrink: 0;
-}
-
-.error-close:hover { color: var(--color-error); }
-
-/* ── Footer ──────────────────────────────────────────── */
-.page-footer {
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-  font-size: 0.75rem;
-  color: var(--color-text-muted);
-}
-
-.footer-sep { opacity: 0.4; }
-</style>
+<style src="@/assets/styles/home.css"></style>

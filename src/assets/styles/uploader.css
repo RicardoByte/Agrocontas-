@@ -1,0 +1,311 @@
+/* ============================================================
+   AgroContas — Invoice Uploader & Precision Dropzone Styling
+   Fiel ao design Stitch AgroTech Precision System (Image 1)
+   ============================================================ */
+
+.uploader-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* ── Container Precision Dropzone com Cantoneiras ─────────── */
+.precision-dropzone-wrap {
+  position: relative;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px dashed #c8d8c9;
+  padding: 3.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.precision-dropzone-wrap:hover {
+  border-color: var(--color-agro-forest, #154326);
+  background: #fbfdfb;
+}
+
+.precision-dropzone-wrap--dragging {
+  border-color: var(--color-agro-forest, #154326);
+  background: rgba(183, 246, 24, 0.08);
+  border-style: solid;
+  transform: scale(1.005);
+}
+
+.precision-dropzone-wrap--has-file {
+  border-style: solid;
+  border-color: #c4d8c6;
+  padding: 2.25rem 2rem;
+  background: #fdfefd;
+}
+
+/* Cantoneiras Técnicas (Precision Corner Markers) */
+.corner-marker {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  pointer-events: none;
+  border-color: #154326;
+  opacity: 0.85;
+}
+
+.corner-marker--tl {
+  top: 10px;
+  left: 10px;
+  border-top: 2px solid;
+  border-left: 2px solid;
+}
+
+.corner-marker--tr {
+  top: 10px;
+  right: 10px;
+  border-top: 2px solid;
+  border-right: 2px solid;
+}
+
+.corner-marker--bl {
+  bottom: 10px;
+  left: 10px;
+  border-bottom: 2px solid;
+  border-left: 2px solid;
+}
+
+.corner-marker--br {
+  bottom: 10px;
+  right: 10px;
+  border-bottom: 2px solid;
+  border-right: 2px solid;
+}
+
+/* Ícone de Nuvem / Upload Floresta com Lima */
+.dropzone-icon-box {
+  width: 64px;
+  height: 64px;
+  background: var(--color-agro-forest, #154326);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-agro-lime, #B7F618);
+  box-shadow: 0 8px 24px rgba(21, 67, 38, 0.25);
+  margin-bottom: 1.35rem;
+  transition: transform 0.2s ease;
+}
+
+.precision-dropzone-wrap:hover .dropzone-icon-box {
+  transform: translateY(-2px);
+}
+
+.dropzone-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: #111e14;
+  margin: 0 0 0.45rem;
+}
+
+.dropzone-desc {
+  font-size: 0.84rem;
+  color: #556b59;
+  max-width: 580px;
+  line-height: 1.55;
+  margin: 0 0 1.5rem;
+}
+
+.dropzone-desc strong {
+  color: #1b3320;
+}
+
+/* Botão Selecionar do Computador */
+.btn-select-file {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.85rem 1.6rem;
+  background: var(--color-agro-forest, #154326);
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(21, 67, 38, 0.2);
+}
+
+.btn-select-file:hover {
+  background: #1b5430;
+  box-shadow: 0 6px 18px rgba(21, 67, 38, 0.3);
+  transform: translateY(-1px);
+}
+
+.dropzone-caption {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #839d87;
+  margin-top: 1.25rem;
+}
+
+/* Preview de arquivo carregado */
+.file-preview-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: #ffffff;
+  border: 1px solid #d5e2d6;
+  border-radius: 10px;
+  padding: 0.9rem 1.25rem;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.file-preview-icon {
+  width: 40px;
+  height: 40px;
+  background: rgba(220, 38, 38, 0.08);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #dc2626;
+  flex-shrink: 0;
+}
+
+.file-preview-meta {
+  flex: 1;
+  text-align: left;
+  min-width: 0;
+}
+
+.file-preview-name {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #111e14;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.file-preview-size {
+  display: block;
+  font-size: 0.72rem;
+  color: #647e68;
+  font-family: 'JetBrains Mono', monospace;
+  margin-top: 2px;
+}
+
+.file-preview-remove {
+  background: transparent;
+  border: none;
+  color: #94a697;
+  cursor: pointer;
+  padding: 0.4rem;
+  border-radius: 4px;
+  transition: all 0.15s ease;
+}
+
+.file-preview-remove:hover {
+  color: #dc2626;
+  background: rgba(220, 38, 38, 0.08);
+}
+
+.dropzone-change-hint {
+  font-size: 0.75rem;
+  color: #728c76;
+  margin-top: 0.75rem;
+}
+
+/* Botão Ação Extrair IA */
+.btn-extract-action {
+  width: 100%;
+  height: 48px;
+  background: linear-gradient(135deg, var(--color-agro-forest, #154326) 0%, #1d5f35 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 16px rgba(21, 67, 38, 0.25);
+}
+
+.btn-extract-action:hover:not(:disabled) {
+  background: linear-gradient(135deg, #1b5430 0%, #257a44 100%);
+  box-shadow: 0 6px 20px rgba(21, 67, 38, 0.35);
+  transform: translateY(-1px);
+}
+
+.btn-extract-action:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-extract-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: authSpin 0.7s linear infinite;
+}
+
+/* Indicador de processamento */
+.processing-status-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  padding: 0.85rem;
+  background: #f0f7f1;
+  border: 1px solid #d0e5d2;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-agro-forest, #154326);
+}
+
+.processing-dots {
+  display: flex;
+  gap: 4px;
+}
+
+.processing-dots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-agro-forest, #154326);
+  animation: pulseDot 1.2s infinite ease-in-out;
+}
+
+.processing-dots span:nth-child(2) { animation-delay: 0.2s; }
+.processing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes pulseDot {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+  40% { transform: scale(1); opacity: 1; }
+}
+
+.file-input-hidden {
+  display: none;
+}

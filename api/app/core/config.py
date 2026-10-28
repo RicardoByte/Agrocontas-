@@ -33,8 +33,13 @@ class Settings(BaseSettings):
         "gemini-3.5-flash"
     ]
 
-    # Banco de dados (ainda não utilizado pela API)
+    # Banco de dados
     database_url: str = "sqlite:///./agrocontas_dev.db"
+
+    # JWT / Autenticação
+    jwt_secret_key: str = "agrocontas-super-secret-key-2024-agrotech-precision-jwt"
+    jwt_algorithm: str = "HS256"
+    jwt_expire_minutes: int = 60 * 24 * 7  # 7 dias
 
     # API
     api_host: str = "0.0.0.0"

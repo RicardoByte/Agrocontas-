@@ -1,0 +1,154 @@
+/* ============================================================
+   AgroContas — AppTopbar Styling
+   Fiel ao design Stitch AgroTech Precision System (Image 1)
+   ============================================================ */
+
+.topbar {
+  height: var(--topbar-height, 54px);
+  background: var(--topbar-bg, #ffffff);
+  border-bottom: 1px solid var(--topbar-border, #e2eae2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 90;
+  flex-shrink: 0;
+}
+
+/* ── Lado Esquerdo: Titular e Safra ────────────────────────── */
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.topbar-titular-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.85rem;
+  background: #f1f5f1;
+  border: 1px solid #d8e2d8;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #1a3321;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.topbar-titular-btn:hover {
+  background: #e8efe8;
+  border-color: #cbd8cb;
+}
+
+.titular-tag {
+  color: #647e68;
+  font-size: 0.68rem;
+  letter-spacing: 0.05em;
+}
+
+.topbar-safra-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.85rem;
+  background: #eaf5eb;
+  border: 1px solid #cce5ce;
+  border-radius: 6px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: #154326;
+  text-transform: uppercase;
+}
+
+.safra-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #15803d;
+  box-shadow: 0 0 6px rgba(21, 128, 61, 0.4);
+}
+
+/* ── Lado Direito: Ações de Apoio e Usuário ────────────────── */
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.topbar-btn-ajuda {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 0.95rem;
+  background: var(--color-agro-forest, #154326);
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.16s ease;
+}
+
+.topbar-btn-ajuda:hover {
+  background: #1b5430;
+  box-shadow: 0 2px 8px rgba(21, 67, 38, 0.25);
+}
+
+.topbar-notif-btn {
+  width: 34px;
+  height: 34px;
+  background: #f1f5f1;
+  border: 1px solid #d8e2d8;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #334155;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.15s ease;
+}
+
+.topbar-notif-btn:hover {
+  background: #e8efe8;
+  color: #0f172a;
+}
+
+.topbar-notif-dot {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ea580c;
+  border: 1px solid #ffffff;
+}
+
+.topbar-avatar-btn {
+  width: 34px;
+  height: 34px;
+  background: var(--color-agro-forest, #154326);
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 800;
+  transition: opacity 0.15s ease;
+}
+
+.topbar-avatar-btn:hover {
+  opacity: 0.9;
+}
