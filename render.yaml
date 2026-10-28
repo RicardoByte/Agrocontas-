@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: agrocontas-api
+    runtime: python
+    rootDir: api
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: DATABASE_URL
+        sync: false          # Definido manualmente no painel do Render
+      - key: GEMINI_API_KEY
+        sync: false          # Definido manualmente no painel do Render
+      - key: JWT_SECRET_KEY
+        generateValue: true  # Render gera automaticamente
+      - key: ENVIRONMENT
+        value: production
+      - key: ALLOWED_ORIGINS
+        value: https://agrocontas.onrender.com,https://agrocontas.vercel.app
+    healthCheckPath: /health

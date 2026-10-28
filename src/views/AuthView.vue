@@ -87,6 +87,10 @@ function switchTab(tab: 'login' | 'register') {
   activeTab.value = tab
   authStore.clearError()
 }
+
+function handleForgotPassword() {
+  alert('Para redefinir sua senha, entre em contato com o suporte ou administrador do sistema.')
+}
 </script>
 
 <template>
@@ -279,7 +283,7 @@ function switchTab(tab: 'login' | 'register') {
                   <span>Lembrar neste computador da sede</span>
                 </label>
 
-                <a href="#recuperar" class="auth-forgot-link" @click.prevent="alert('Funcionalidade de recuperação enviada para suporte agro')">
+                <a href="#recuperar" class="auth-forgot-link" @click.prevent="handleForgotPassword">
                   <span>Esqueceu sua senha?</span>
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="12" height="12" stroke-width="2.2">
                     <line x1="7" y1="17" x2="17" y2="7"/>
