@@ -62,12 +62,6 @@ cd "Agrocontas-"
 ### 2. Instale as dependências do frontend
 > **Pré-requisito**: Node.js 18+. Baixe em https://nodejs.org
 ```bash
-npm install
-```
-
-### 3. Configure o Backend
-
-```bash
 cd api
 python3 -m venv .venv
 source .venv/bin/activate
@@ -76,7 +70,7 @@ cp .env.example .env
 # Edite .env e configure o GEMINI_API_KEY
 ```
 
-### 4. Inicie os servidores
+### 3. Inicie os servidores
 
 **Terminal 1 — Backend:**
 ```bash
@@ -90,7 +84,7 @@ python main.py
 npm run dev
 ```
 
-### 5. Acesse
+### 4. Acesse
 - **Frontend:** http://localhost:5173
 - **API Docs:** http://localhost:8000/docs
 - **Health Check:** http://localhost:8000/health
