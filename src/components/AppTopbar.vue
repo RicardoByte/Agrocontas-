@@ -2,6 +2,7 @@
 import { useAuthStore } from '@/stores/authStore'
 
 const authStore = useAuthStore()
+const commitHash = typeof __APP_COMMIT_HASH__ !== 'undefined' ? __APP_COMMIT_HASH__ : '4da785c'
 </script>
 
 <template>
@@ -11,6 +12,15 @@ const authStore = useAuthStore()
       <div class="topbar-safra-pill">
         <span class="safra-dot" />
         <span>SAFRA 2024/25 ATIVA</span>
+      </div>
+
+      <div class="topbar-commit-pill" title="Código da Última Atualização no GitHub">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="11" height="11" stroke-width="2">
+          <circle cx="12" cy="12" r="4"/>
+          <line x1="1.05" y1="12" x2="7" y2="12"/>
+          <line x1="17.01" y1="12" x2="22.96" y2="12"/>
+        </svg>
+        <span>GitHub: <code>{{ commitHash }}</code></span>
       </div>
     </div>
 

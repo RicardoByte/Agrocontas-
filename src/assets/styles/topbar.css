@@ -73,6 +73,29 @@
   box-shadow: 0 0 6px rgba(21, 128, 61, 0.4);
 }
 
+.topbar-commit-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.65rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+.topbar-commit-pill svg {
+  color: #154326;
+}
+
+.topbar-commit-pill code {
+  color: #154326;
+  font-weight: 700;
+}
+
 /* ── Lado Direito: Ações de Apoio e Usuário ────────────────── */
 .topbar-right {
   display: flex;
