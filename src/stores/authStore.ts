@@ -30,9 +30,12 @@ export const useAuthStore = defineStore('auth', () => {
   const iniciaisUsuario = computed(() => {
     const nome = nomeUsuario.value
     if (!nome) return '?'
-    const partes = nome.trim().split(/\s+/)
-    if (partes.length === 1) return partes[0][0].toUpperCase()
-    return (partes[0][0] + partes[partes.length - 1][0]).toUpperCase()
+    const partes = nome.trim().split(/\s+/).filter(Boolean)
+    const primeira = partes[0]
+    const ultima = partes[partes.length - 1]
+    if (!primeira) return '?'
+    if (partes.length === 1 || !ultima) return primeira.charAt(0).toUpperCase()
+    return (primeira.charAt(0) + ultima.charAt(0)).toUpperCase()
   })
 
   // ─── Actions ─────────────────────────────────────────────────────────────
