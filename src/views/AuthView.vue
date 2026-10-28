@@ -91,6 +91,8 @@ function switchTab(tab: 'login' | 'register') {
 function handleForgotPassword() {
   alert('Para redefinir sua senha, entre em contato com o suporte ou administrador do sistema.')
 }
+
+const commitHash = typeof __APP_COMMIT_HASH__ !== 'undefined' ? __APP_COMMIT_HASH__ : '4da785c'
 </script>
 
 <template>
@@ -572,7 +574,17 @@ function handleForgotPassword() {
             <span>Ambiente seguro e criptografado</span>
           </div>
 
-          <span class="auth-version-badge">V2.5 AGROTECH • VUE3 + FASTAPI</span>
+          <div class="auth-version-wrapper">
+            <span class="auth-version-badge">V2.5 AGROTECH</span>
+            <span class="auth-commit-badge" title="Código da Última Atualização no GitHub">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="11" height="11" stroke-width="2">
+                <circle cx="12" cy="12" r="4"/>
+                <line x1="1.05" y1="12" x2="7" y2="12"/>
+                <line x1="17.01" y1="12" x2="22.96" y2="12"/>
+              </svg>
+              <span>GitHub: <code>{{ commitHash }}</code></span>
+            </span>
+          </div>
         </footer>
       </main>
     </div>
